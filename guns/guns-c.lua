@@ -4,6 +4,18 @@ RegisterCommand("clear",function()
     notify('~r~Cleared All Weapons.')
 end)
 
+local cars = {"adder","comet","cheetah","faggio"}
+RegisterCommand("car", function()
+    local car = (cars[math.random(#cars)])
+    spawnCar(car)
+    notify("~p~Spawned car: ~h~~g~" .. car)
+end)
+
+RegisterCommand("die", function()
+    SetEntityHealth(PlayerPedId(), 0)
+    notify("~r~You die")
+end)
+
 
 Citizen.CreateThread(function()
     --print("guns-c CreateThread...")
@@ -14,6 +26,9 @@ Citizen.CreateThread(function()
         if IsControlJustReleased(1, h_key --[[H key]]) then
             print("The key ".. h_key .. "was pressed")
             giveWeapon("weapon_pistol")
+            giveWeapon("weapon_pumpshotgun")
+                weaponComponent("weapon_pumpshotgun", "COMPONENT_AT_SR_SUPP")
+                weaponComponent("weapon_pumpshotgun", "COMPONENT_AT_AR_FLSH")
             giveWeapon("weapon_knife")
             alert("~b~Give Weapons Pistal Knife with ~INPUT_VEH_HEADLIGHT~")
         end

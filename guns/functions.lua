@@ -31,3 +31,9 @@ function spawnCar(car)
     local vehical = CreateVehicle(car, x + 3, y + 3, z + 1, 0.0, true, false)
     SetEntityAsMissionEntity(vehicle, true, true)
 end
+
+function weaponComponent( weaponHash, component)
+    if HasPedGotWeapon(GetPlayerPed(-1), GetHashKey(weaponHash), false) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(weaponHash), GetHashKey(component))            
+    end 
+end 
