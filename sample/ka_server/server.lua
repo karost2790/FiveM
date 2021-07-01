@@ -11,7 +11,9 @@ local function MessageUpdate( playerId, args )
 
     local argString = args 
     local playerName = GetPlayerName(playerId)
-    result = 0
+    local lresult = 0
+    local insertId = 0
+    local lbFinishJob = false
     print ( "args " .. argString  )
     print ( "playerName " .. playerName )
 
@@ -20,14 +22,18 @@ local function MessageUpdate( playerId, args )
         MySQL.Async.insert ('INSERT INTO ka_main (name,args) VALUES (@name , @arg)',
         {   ['@name'] = playerName, 
             ["@arg"] = argString },
-        function(insertId)
-           print("insertId " .. insertId ) 
-           result  = tonumber(insertId)
-        end)
-        print("tonumber " .. result)
-        return result
+        function(insertId)        
+         
+           lresult = insertId 
+           lbFinishJob = true 
+        end)      
+        repeat Citizen.Wait(0) until lbFinishJob == true   
+        -- we need to delay to wain database 
+        -- server finish job
+        print("lresult out side function  " .. lresult  )
+        return lresult 
     else
-        print("Fuck! there is no player id...")
+        print("MessageUpdate:Fuck! there is no player id...")
         return -1
     end        
     
@@ -39,10 +45,12 @@ AddEventHandler('ka:msgupdate', function(msgs)
     local s = source
     local argString = table.concat(msgs, " ")
     local result = MessageUpdate(source, argString)
-    print( result )
-    if ( result > 0 ) then 
-        TriggerClientEvent('ka:callback_server' , s ,"^2".. argString .."^0")
+    print( "row id:" .. result )
+    print( "source " .. s )
+    -- triggerClientEvent('event_name',' source ',' paramer 1','parameter 2')
+    if ( result >= 0 ) then 
+        TriggerClientEvent('ka:callback_server' , s , result  ,"^2".. argString .. " id=" .. result .. "^0")
     else
-        TriggerClientEvent('ka:callback_server' , s ,"^1".. "Fuck it is not work!" .."^0")
+        TriggerClientEvent('ka:callback_server' , s , result  ,"^1".. "Fuck it is not work!" .."^0")
     end
 end)

@@ -1,10 +1,10 @@
 
-
+local rowInsert = 0
+local messageServer = ""
 RegisterNetEvent('ka:callback_server')
-AddEventHandler('ka:callback_server', function(argument)
-    local msg = argument
-    print("output....run" .. argument )
-    TriggerEvent("chatMessage", "[Success]",{ 0,255,0}, "Added " .. argument .. " into the database")
+AddEventHandler('ka:callback_server', function( rowInsert, messageServer )   
+    print("output row Insert " .. rowInsert )
+    TriggerEvent("chatMessage", "[Success]",{ 0,255,0}, "Added " .. messageServer .. " into the database")
 end)
 
 
