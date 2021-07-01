@@ -1,0 +1,15 @@
+RegisterNetEvent("output")
+AddEventHandler("output", function(argument)
+    print("output....run")
+    TriggerEvent("chatMessage", "[Success]",{ 0,255,0}, "Added " .. argument .. " into the database")
+end)
+
+
+RegisterCommand("msg", function(source, args)
+    print('client ' ..  GetPlayerName(playerId) )
+    print('client' ..  table.concat(args, " "))
+    TriggerServerEvent("aa:bb","hello world")
+    --- TriggerServerEvent('ka_main:msgLog', source , args)    
+    --- TriggerServerEvent('money:allowPickupNear', netId)
+    print('client end')
+end,false)
