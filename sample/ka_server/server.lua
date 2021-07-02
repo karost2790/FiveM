@@ -1,10 +1,10 @@
-CreateThread(function()
-    while true do
-        Wait(100000)
-        print("server->CreateThread..loop 10 sec.")
+--CreateThread(function()
+--    while true do
+--        Wait(100000)
+--        print("server->ka_server:CreateThread..loop 10 sec.")
         
-    end
-end)
+--    end
+-- b2M7@9x0ceo9@m7bkend)
 
 
 local function MessageUpdate( playerId, args )
